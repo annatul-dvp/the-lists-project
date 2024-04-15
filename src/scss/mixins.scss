@@ -1,0 +1,15 @@
+@mixin flex-row ($justify-content, $align-items, $wrap: owrap) {
+  display: flex;
+  flex-wrap: $wrap;
+  column-gap: 10px;
+  justify-content: $justify-content;
+  align-items: $align-items;
+}
+
+@mixin custom-checkbox ($width, $height) {
+  position: relative;
+  display: inline-block;
+  width: $width;
+  height: $height;
+  border: 1px solid black;
+}
