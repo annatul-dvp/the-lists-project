@@ -1,28 +1,61 @@
 <template>
   <li class="item">
     <label class="item__name">
-      <input type="checkbox" class="hidden item__checkbox" :checked="state.checked">
-      <span class="item__custom-checkbox"></span>
-      {{ state.text }}
+      <input type="checkbox" class="hidden item__checkbox" v-model="state.isChecked">
+      <span class="item__custom-checkbox" :class="classChecked" @click="changeCheckStatus"></span>
+      {{ name }}
     </label>
-    <input type="text" class="item__amount" :value="state.amount">
-    <input type="color" class="item__color" :value="state.color">
+    <input type="text" class="item__amount" v-model="state.amount" @input="changeAmount">
+    <input type="color" class="item__color" v-model="state.color" @change="changeColor">
   </li>
 </template>
 
 <script>
-import { reactive, defineComponent } from 'vue'
+import { defineComponent, reactive, ref, onMounted } from 'vue'
+import { setCheckboxStyle } from '@/hooks/useCheckbox'
+// import { useStore } from 'vuex'
+
 export default defineComponent({
-  setup () {
+  props: {
+    id: { type: Number, required: true },
+    name: { type: String, required: true },
+    isChecked: { type: Boolean, required: true },
+    amount: { type: Number, required: true },
+    color: { type: String, required: true }
+  },
+  emits: ['update:color', 'update:amount', 'update:isChecked'],
+  setup (props, { emit: $emit }) {
     const state = reactive({
-      checked: true,
-      text: 'Something',
-      amount: 10,
-      color: '#45D819'
+      isChecked: props.isChecked,
+      amount: props.amount,
+      color: props.color
+    })
+    const classChecked = ref('')
+
+    onMounted(() => {
+      classChecked.value = setCheckboxStyle('item__custom-checkbox', state.isChecked)
     })
 
+    function changeCheckStatus () {
+      $emit('update:isChecked', !state.isChecked)
+      classChecked.value = setCheckboxStyle('item__custom-checkbox', !state.isChecked)
+    }
+
+    function changeColor () {
+      $emit('update:color', state.color)
+    }
+
+    function changeAmount () {
+      $emit('update:amount', state.amount)
+    }
+
     return {
-      state
+      state,
+      classChecked,
+
+      changeColor,
+      changeAmount,
+      changeCheckStatus
     }
   }
 })
@@ -49,7 +82,7 @@ export default defineComponent({
       @include custom-checkbox (14px, 14px);
 
       &::after {
-        content: '';
+        //content: '';
         position: absolute;
         bottom: 0;
         right: 0;

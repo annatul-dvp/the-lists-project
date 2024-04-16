@@ -13,10 +13,13 @@ export default defineComponent({
     onMounted(() => {
       const field = document.querySelector('.list-results__squares')
       const size = parseInt((Number(field.clientWidth) - 5 * 29) / 30) + 'px'
-      document.querySelector('.color-square').style.backgroundColor = props.color
-      document.querySelector('.color-square').style.width = size
-      document.querySelector('.color-square').style.height = size
-      console.log(props.color)
+      const colorSquares = document.querySelectorAll('.color-square')
+      colorSquares.forEach((colorSquare) => {
+        colorSquare.style.backgroundColor = props.color
+        colorSquare.style.width = size
+        colorSquare.style.height = size
+      })
+      // console.log(props.color)
     })
 
     return {

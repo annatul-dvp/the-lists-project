@@ -3,29 +3,86 @@
     <div class="list__title">
       <span class="list__button"></span>
       <label class="list__name">
-        <input type="checkbox" class="hidden list__checkbox">
-        <span class="list__custom-checkbox"></span>
-        {{ name }}
+        <input type="checkbox" class="hidden list__checkbox" v-model="state.isChecked">
+        <span class="list__custom-checkbox" :class="classChecked" @click="changeCheckStatus"></span>
+        {{ listName }}
       </label>
     </div>
-    <AnItem class="list__item"/>
-    <AnItem class="list__item"/>
-    <AnItem class="list__item"/>
+    <AnItem class="list__item" v-for="item in items" :key="item.id"
+    v-model:name="item.name" v-model:isChecked="item.isChecked"
+    v-model:amount="item.amount" v-model:color="item.color"
+    v-model:id="item.id"/>
   </ul>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed, reactive, onMounted } from 'vue'
+import { useStore } from 'vuex'
 import AnItem from '@/components/AnItem.vue'
+import { setCheckboxStyle } from '@/hooks/useCheckbox'
 
 export default defineComponent({
+  props: {
+    name: { type: String, required: true },
+    isChecked: { type: Boolean, required: true },
+    isOpened: { type: Boolean, required: true }
+  },
+  emits: ['update:isChecked', 'update:isOpened'],
   components: {
     AnItem
   },
-  setup () {
-    const name = ref('List')
+  setup (props, { emit: $emit }) {
+    const listName = ref(props.name)
+
+    const $store = useStore()
+    const items = computed(() => $store.getters.getItems.filter(item => item.listName === listName.value))
+    const classChecked = ref('')
+
+    // function checkItems (items) {
+    //   let countChecked = 0
+    //   items.forEach((i) => {
+    //     if (i.isChecked === true) {
+    //       countChecked += 1
+    //     }
+    //   })
+
+    //   if (countChecked === 0) {
+    //     return 'unchecked'
+    //   } else if (countChecked === items.length) {
+    //     return 'checked'
+    //   } else {
+    //     return 'mixed'
+    //   }
+    // }
+
+    onMounted(() => {
+      // console.log(checkItems(items.value))
+      classChecked.value = setCheckboxStyle('list__custom-checkbox', state.isChecked)
+    })
+
+    const state = reactive({
+      isChecked: props.isChecked,
+      isOpened: props.isOpened
+    })
+
+    function changeCheckStatus () {
+      // if (checkItems(items.value) === 'checked') {
+      //   $store.commit('setAllItemsUnChecked', listName)
+      // }
+      // if (checkItems(items.value) === 'unchecked') {
+      //   $store.commit('setAllItemsChecked', listName)
+      // }
+      $emit('update:isChecked', !state.isChecked) // меняем значение кастомного чекбокса
+      classChecked.value = setCheckboxStyle('list__custom-checkbox', !state.isChecked) // меняем стиль отображения кастомного чекбокса
+    }
+
     return {
-      name
+      listName,
+      classChecked,
+      state,
+      items,
+
+      changeCheckStatus
     }
   }
 })
@@ -82,7 +139,7 @@ export default defineComponent({
       @include custom-checkbox (18px, 18px);
 
       &::after {
-        content: '';
+        //content: '';
         position: absolute;
         top: 6px;
         bottom: 6px;

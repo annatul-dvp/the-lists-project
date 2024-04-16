@@ -1,22 +1,38 @@
 <template>
   <div class="list-results">
-    <h4 class="list-results__name">List</h4>
+    <h4 class="list-results__name">{{ listName }}</h4>
     <button>{{ btn.name }}</button>
     <div class="list-results__squares">
-      <ColorSquare v-model:color="color"/>
+      <ColorSquare v-for="item in items" :key="item.id"
+      v-model:color="item.color" />
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref, onMounted } from 'vue'
+import { defineComponent, ref, onMounted, computed } from 'vue'
+import { useStore } from 'vuex'
 import ColorSquare from './ColorSquare.vue'
 
 export default defineComponent({
+  props: {
+    name: { type: String, required: true }
+  },
   components: {
     ColorSquare
   },
-  setup () {
+  setup (props) {
+    const listName = ref(props.name)
+
+    const $store = useStore()
+    const items = computed(() => $store.getters.getItems.filter(item => item.listName === listName.value))
+    // const itemsSquares = computed(() => {
+    //   const squares = []
+    //   items.value.forEach((i) => {
+    //     squares.push
+    //   })
+    //   return squares
+    // })
     const btn = ref({
       id: 1,
       name: 'Перемешать'
@@ -31,6 +47,8 @@ export default defineComponent({
       // console.log(squareSize.value)
     })
     return {
+      listName,
+      items,
       btn,
       color
     }
