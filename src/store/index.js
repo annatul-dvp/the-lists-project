@@ -6,31 +6,31 @@ export default createStore({
       {
         id: 1,
         name: 'List1',
-        isChecked: true,
+        isChecked: false,
         isOpened: true
       },
       {
         id: 2,
         name: 'List2',
-        isChecked: true,
+        isChecked: false,
         isOpened: true
       },
       {
         id: 3,
         name: 'List3',
-        isChecked: true,
+        isChecked: false,
         isOpened: true
       },
       {
         id: 4,
         name: 'List4',
-        isChecked: true,
+        isChecked: false,
         isOpened: true
       },
       {
         id: 5,
         name: 'List5',
-        isChecked: true,
+        isChecked: false,
         isOpened: true
       }
     ],
@@ -39,7 +39,7 @@ export default createStore({
         id: 1,
         name: 'Item1',
         listId: 1,
-        isChecked: true,
+        isChecked: false,
         amount: 10,
         color: '#42c0c9',
         squares: []
@@ -66,7 +66,7 @@ export default createStore({
         id: 4,
         name: 'Item4',
         listId: 1,
-        isChecked: true,
+        isChecked: false,
         amount: 11,
         color: '#f04b35',
         squares: []
@@ -75,7 +75,7 @@ export default createStore({
         id: 5,
         name: 'Item1',
         listId: 2,
-        isChecked: true,
+        isChecked: false,
         amount: 15,
         color: '#42c0c9',
         squares: []
@@ -93,7 +93,7 @@ export default createStore({
         id: 7,
         name: 'Item3',
         listId: 2,
-        isChecked: true,
+        isChecked: false,
         amount: 7,
         color: '#5442c9',
         squares: []
@@ -120,7 +120,7 @@ export default createStore({
         id: 10,
         name: 'Item1',
         listId: 3,
-        isChecked: true,
+        isChecked: false,
         amount: 3,
         color: '#42c0c9',
         squares: []
@@ -129,7 +129,7 @@ export default createStore({
         id: 11,
         name: 'Item2',
         listId: 3,
-        isChecked: true,
+        isChecked: false,
         amount: 10,
         color: '#24d1a9',
         squares: []
@@ -138,7 +138,7 @@ export default createStore({
         id: 12,
         name: 'Item3',
         listId: 3,
-        isChecked: true,
+        isChecked: false,
         amount: 12,
         color: '#5442c9',
         squares: []
@@ -147,7 +147,7 @@ export default createStore({
         id: 13,
         name: 'Item4',
         listId: 3,
-        isChecked: true,
+        isChecked: false,
         amount: 23,
         color: '#35f0b8',
         squares: []
@@ -156,7 +156,7 @@ export default createStore({
         id: 14,
         name: 'Item5',
         listId: 3,
-        isChecked: true,
+        isChecked: false,
         amount: 16,
         color: '#f04b35',
         squares: []
@@ -165,7 +165,7 @@ export default createStore({
         id: 15,
         name: 'Item6',
         listId: 3,
-        isChecked: true,
+        isChecked: false,
         amount: 10,
         color: '#a6db14',
         squares: []
@@ -174,7 +174,7 @@ export default createStore({
         id: 16,
         name: 'Item7',
         listId: 3,
-        isChecked: true,
+        isChecked: false,
         amount: 5,
         color: '#1428db',
         squares: []
@@ -290,6 +290,20 @@ export default createStore({
     }
   },
   mutations: {
+    setListChecked (state, id) {
+      state.lists.forEach((list) => {
+        if (list.id === id) {
+          list.isChecked = true
+        }
+      })
+    },
+    changeListChecked (state, id) {
+      state.lists.forEach((list) => {
+        if (list.id === id) {
+          list.isChecked = !list.isChecked
+        }
+      })
+    },
     setAllItemsChecked (state, listId) {
       state.items.forEach((item) => {
         if (item.listId === listId) {
@@ -321,6 +335,7 @@ export default createStore({
     setNewItemAmount (state, { itemId, newAmount }) {
       state.items.forEach((item) => {
         if (item.id === itemId) {
+          item.squares.splice(newAmount, item.amount - newAmount)
           item.amount = newAmount
         }
       })

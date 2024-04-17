@@ -1,9 +1,11 @@
 <template>
-  <span class="color-square" :style="styleSquare"></span>
+  <span class="color-square" :style="styleSquare" @click="deleteSquare()"></span>
 </template>
 
 <script>
 import { defineComponent, reactive, onMounted } from 'vue'
+import { useStore } from 'vuex'
+
 export default defineComponent({
   props: {
     id: { type: String, required: true },
@@ -13,7 +15,12 @@ export default defineComponent({
   },
   emits: ['update:size'],
   setup (props, { emit: $emit }) {
-    // console.log('props.color', props.color)
+    const $store = useStore()
+
+    function deleteSquare () {
+      $store.commit('deleteSquare', props.itemId, props.id)
+    }
+
     const styleSquare = reactive({
       backgroundColor: props.color,
       gridArea: `square-${props.id}`
@@ -34,7 +41,8 @@ export default defineComponent({
     })
 
     return {
-      styleSquare
+      styleSquare,
+      deleteSquare
     }
   }
 })

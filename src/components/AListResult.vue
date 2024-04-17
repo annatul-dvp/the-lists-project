@@ -12,7 +12,6 @@
 <script>
 import { defineComponent, ref, reactive, computed, watch } from 'vue'
 import { useStore } from 'vuex'
-// import ColorSquare from './ColorSquare.vue'
 import ColorSquare from '@/components/ColorSquare.vue'
 import { standartGridTemplateAreas, randomGridTemplateAreas } from '@/hooks/useSquaresSorting'
 
@@ -31,7 +30,6 @@ export default defineComponent({
       .reduce((acc, currentItem) => acc.concat(currentItem.squares), []))
 
     const isSorted = ref(true)
-    // const gridTemplateAreas = computed(() => standartGridTemplateAreas(items.value))
 
     const squareSize = ref('10px') // высота и ширина ячейки
 
@@ -51,18 +49,14 @@ export default defineComponent({
 
     function changeSorting () {
       isSorted.value = !isSorted.value
-      console.log('clicked', isSorted.value)
     }
 
     watch(() => isSorted.value, (s) => {
-      console.log('watch started', s)
       if (s) {
         squaresFieldStyles.gridTemplateAreas = standartGridTemplateAreas(items.value)
       } else {
         squaresFieldStyles.gridTemplateAreas = randomGridTemplateAreas(items.value)
       }
-
-      console.log(squaresFieldStyles.gridTemplateAreas)
     }, { immediate: true })
 
     return {
@@ -89,6 +83,10 @@ export default defineComponent({
     min-height: 100px;
     width: 100%;
 
+    &:not(:last-of-type) {
+      margin-bottom: 20px;
+    }
+
     &__name {
       font-size: 1rem;
       text-align: left;
@@ -97,15 +95,6 @@ export default defineComponent({
     &__squares {
       width: 100%;
       grid-auto-flow: dense;
-      // display: grid;
-      // row-gap: 5px;
-      // column-gap: 5px;
-      // grid-template-areas:
-      //                     "a a a"
-      //                     "b b b"
-      //                     "b c c";
-      // width: 100%;
-      // min-height: 20px;
     }
   }
 </style>

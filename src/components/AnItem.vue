@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { defineComponent, reactive, ref, onMounted } from 'vue'
+import { defineComponent, reactive, ref, onMounted, watch } from 'vue'
 import { setCheckboxStyle } from '@/hooks/useCheckbox'
 import { useStore } from 'vuex'
 
@@ -34,26 +34,31 @@ export default defineComponent({
     const classChecked = ref('')
 
     onMounted(() => {
-      // $store.commit('setSquares', props.id)
       classChecked.value = setCheckboxStyle('item__custom-checkbox', state.isChecked)
     })
 
     function changeCheckStatus () {
       $store.commit('changeItemChecked', props.id)
-      // $emit('update:isChecked', !state.isChecked)
       classChecked.value = setCheckboxStyle('item__custom-checkbox', !state.isChecked)
     }
 
     function changeColor () {
       $store.commit('setNewItemColor', { itemId: props.id, newColor: state.color })
-      // $emit('update:color', state.color)
     }
 
     function changeAmount () {
       console.log('state.amount', state.amount)
       $store.commit('setNewItemAmount', { itemId: props.id, newAmount: state.amount })
-      // $emit('update:amount', state.amount)
     }
+
+    watch(() => props.amount, (newAmount) => {
+      state.amount = newAmount
+    })
+
+    watch(() => props.isChecked, (chandgedCheck) => {
+      state.isChecked = chandgedCheck
+      classChecked.value = setCheckboxStyle('item__custom-checkbox', chandgedCheck)
+    })
 
     return {
       state,
@@ -104,6 +109,7 @@ export default defineComponent({
     &__amount {
       width: 10%;
       text-align: end;
+      border: none;
     }
 
     &__color {

@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, computed, reactive, onMounted } from 'vue'
+import { defineComponent, ref, computed, reactive, onMounted, watch } from 'vue'
 import { useStore } from 'vuex'
 import AnItem from '@/components/AnItem.vue'
 import { setCheckboxStyle } from '@/hooks/useCheckbox'
@@ -32,50 +32,54 @@ export default defineComponent({
   components: {
     AnItem
   },
-  setup (props, { emit: $emit }) {
-    // const listId = ref(props.name)
-
+  setup (props) {
     const $store = useStore()
     const items = computed(() => $store.getters.getItems.filter(item => item.listId === props.id))
+    const isAnyItemChecked = computed(() => {
+      if (items.value.find((i) => i.isChecked === true) !== undefined) {
+        $store.commit('setListChecked', props.id)
+        return true
+      } else {
+        return false
+      }
+    })
     const classChecked = ref('')
 
-    // function checkItems (items) {
-    //   let countChecked = 0
-    //   items.forEach((i) => {
-    //     if (i.isChecked === true) {
-    //       countChecked += 1
-    //     }
-    //   })
+    function checkItems () {
+      let countChecked = 0
+      items.value.forEach((i) => {
+        if (i.isChecked === true) {
+          countChecked += 1
+        }
+      })
 
-    //   if (countChecked === 0) {
-    //     return 'unchecked'
-    //   } else if (countChecked === items.length) {
-    //     return 'checked'
-    //   } else {
-    //     return 'mixed'
-    //   }
-    // }
+      return countChecked
+    }
 
     onMounted(() => {
-      // console.log(checkItems(items.value))
       classChecked.value = setCheckboxStyle('list__custom-checkbox', state.isChecked)
     })
 
     const state = reactive({
-      isChecked: props.isChecked,
+      isChecked: props.isChecked | isAnyItemChecked.value,
       isOpened: props.isOpened
     })
 
     function changeCheckStatus () {
-      // if (checkItems(items.value) === 'checked') {
-      //   $store.commit('setAllItemsUnChecked', listName)
-      // }
-      // if (checkItems(items.value) === 'unchecked') {
-      //   $store.commit('setAllItemsChecked', listName)
-      // }
-      $emit('update:isChecked', !state.isChecked) // меняем значение кастомного чекбокса
+      $store.commit('changeListChecked', props.id)
       classChecked.value = setCheckboxStyle('list__custom-checkbox', !state.isChecked) // меняем стиль отображения кастомного чекбокса
     }
+
+    watch(() => props.isChecked, () => {
+      const itemsCheckStatus = checkItems()
+      // console.log(itemsCheckStatus)
+      if (itemsCheckStatus === 0) {
+        $store.commit('setAllItemsChecked', props.id)
+      }
+      if (itemsCheckStatus === items.value.length) {
+        $store.commit('setAllItemsUnChecked', props.id)
+      }
+    })
 
     return {
       classChecked,
