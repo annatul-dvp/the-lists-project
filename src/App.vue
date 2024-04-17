@@ -25,6 +25,7 @@ export default defineComponent({
   setup () {
     const $store = useStore()
     const lists = computed(() => $store.getters.getLists)
+    $store.commit('setAllSquares')
 
     return {
       lists

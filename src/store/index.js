@@ -41,7 +41,8 @@ export default createStore({
         listName: 'List1',
         isChecked: true,
         amount: 10,
-        color: '#42c0c9'
+        color: '#42c0c9',
+        squares: []
       },
       {
         id: 2,
@@ -49,7 +50,8 @@ export default createStore({
         listName: 'List1',
         isChecked: true,
         amount: 5,
-        color: '#5442c9'
+        color: '#5442c9',
+        squares: []
       },
       {
         id: 3,
@@ -57,7 +59,8 @@ export default createStore({
         listName: 'List1',
         isChecked: true,
         amount: 15,
-        color: '#24d1a9'
+        color: '#24d1a9',
+        squares: []
       },
       {
         id: 4,
@@ -65,7 +68,8 @@ export default createStore({
         listName: 'List1',
         isChecked: true,
         amount: 11,
-        color: '#f04b35'
+        color: '#f04b35',
+        squares: []
       },
       {
         id: 5,
@@ -73,7 +77,8 @@ export default createStore({
         listName: 'List2',
         isChecked: true,
         amount: 15,
-        color: '#42c0c9'
+        color: '#42c0c9',
+        squares: []
       },
       {
         id: 6,
@@ -81,7 +86,8 @@ export default createStore({
         listName: 'List2',
         isChecked: true,
         amount: 5,
-        color: '#24d1a9'
+        color: '#24d1a9',
+        squares: []
       },
       {
         id: 7,
@@ -89,7 +95,8 @@ export default createStore({
         listName: 'List2',
         isChecked: true,
         amount: 7,
-        color: '#5442c9'
+        color: '#5442c9',
+        squares: []
       },
       {
         id: 8,
@@ -97,7 +104,8 @@ export default createStore({
         listName: 'List2',
         isChecked: true,
         amount: 8,
-        color: '#35f0b8'
+        color: '#35f0b8',
+        squares: []
       },
       {
         id: 9,
@@ -105,7 +113,8 @@ export default createStore({
         listName: 'List2',
         isChecked: true,
         amount: 4,
-        color: '#f04b35'
+        color: '#f04b35',
+        squares: []
       },
       {
         id: 10,
@@ -113,7 +122,8 @@ export default createStore({
         listName: 'List3',
         isChecked: true,
         amount: 3,
-        color: '#42c0c9'
+        color: '#42c0c9',
+        squares: []
       },
       {
         id: 11,
@@ -121,7 +131,8 @@ export default createStore({
         listName: 'List3',
         isChecked: true,
         amount: 10,
-        color: '#24d1a9'
+        color: '#24d1a9',
+        squares: []
       },
       {
         id: 12,
@@ -129,7 +140,8 @@ export default createStore({
         listName: 'List3',
         isChecked: true,
         amount: 12,
-        color: '#5442c9'
+        color: '#5442c9',
+        squares: []
       },
       {
         id: 13,
@@ -137,7 +149,8 @@ export default createStore({
         listName: 'List3',
         isChecked: true,
         amount: 23,
-        color: '#35f0b8'
+        color: '#35f0b8',
+        squares: []
       },
       {
         id: 14,
@@ -145,7 +158,8 @@ export default createStore({
         listName: 'List3',
         isChecked: true,
         amount: 16,
-        color: '#f04b35'
+        color: '#f04b35',
+        squares: []
       },
       {
         id: 15,
@@ -153,7 +167,8 @@ export default createStore({
         listName: 'List3',
         isChecked: true,
         amount: 10,
-        color: '#a6db14'
+        color: '#a6db14',
+        squares: []
       },
       {
         id: 16,
@@ -161,7 +176,8 @@ export default createStore({
         listName: 'List3',
         isChecked: true,
         amount: 5,
-        color: '#1428db'
+        color: '#1428db',
+        squares: []
       },
       {
         id: 17,
@@ -169,7 +185,8 @@ export default createStore({
         listName: 'List4',
         isChecked: true,
         amount: 7,
-        color: '#42c0c9'
+        color: '#42c0c9',
+        squares: []
       },
       {
         id: 18,
@@ -177,7 +194,8 @@ export default createStore({
         listName: 'List4',
         isChecked: true,
         amount: 12,
-        color: '#24d1a9'
+        color: '#24d1a9',
+        squares: []
       },
       {
         id: 19,
@@ -185,7 +203,8 @@ export default createStore({
         listName: 'List4',
         isChecked: true,
         amount: 8,
-        color: '#5442c9'
+        color: '#5442c9',
+        squares: []
       },
       {
         id: 21,
@@ -193,7 +212,8 @@ export default createStore({
         listName: 'List4',
         isChecked: true,
         amount: 25,
-        color: '#35f0b8'
+        color: '#35f0b8',
+        squares: []
       },
       {
         id: 22,
@@ -201,7 +221,8 @@ export default createStore({
         listName: 'List4',
         isChecked: true,
         amount: 22,
-        color: '#f04b35'
+        color: '#f04b35',
+        squares: []
       },
       {
         id: 23,
@@ -209,7 +230,8 @@ export default createStore({
         listName: 'List4',
         isChecked: true,
         amount: 10,
-        color: '#a6db14'
+        color: '#a6db14',
+        squares: []
       },
       {
         id: 24,
@@ -217,7 +239,8 @@ export default createStore({
         listName: 'List4',
         isChecked: true,
         amount: 5,
-        color: '#1428db'
+        color: '#1428db',
+        squares: []
       },
       {
         id: 25,
@@ -225,7 +248,8 @@ export default createStore({
         listName: 'List5',
         isChecked: true,
         amount: 8,
-        color: '#42c0c9'
+        color: '#42c0c9',
+        squares: []
       },
       {
         id: 26,
@@ -233,7 +257,8 @@ export default createStore({
         listName: 'List5',
         isChecked: true,
         amount: 6,
-        color: '#24d1a9'
+        color: '#24d1a9',
+        squares: []
       },
       {
         id: 27,
@@ -241,7 +266,8 @@ export default createStore({
         listName: 'List5',
         isChecked: true,
         amount: 2,
-        color: '#5442c9'
+        color: '#5442c9',
+        squares: []
       },
       {
         id: 28,
@@ -249,9 +275,11 @@ export default createStore({
         listName: 'List5',
         isChecked: true,
         amount: 7,
-        color: '#35f0b8'
+        color: '#35f0b8',
+        squares: []
       }
-    ]
+    ],
+    squares: []
   },
   getters: {
     getItems (state) {
@@ -263,23 +291,85 @@ export default createStore({
   },
   mutations: {
     setAllItemsChecked (state, listName) {
-      state.items.forEach((i) => {
-        if (i.listName === listName) {
-          i.isChecked = true
+      state.items.forEach((item) => {
+        if (item.listName === listName) {
+          item.isChecked = true
         }
       })
     },
     setAllItemsUnChecked (state, listName) {
-      state.items.forEach((i) => {
-        if (i.listName === listName) {
-          i.isChecked = false
+      state.items.forEach((item) => {
+        if (item.listName === listName) {
+          item.isChecked = false
         }
       })
     },
-    setNewItemColor (state, itemId, newColor) {
-      state.items.forEach((i) => {
-        if (i.id === itemId) {
-          i.color = newColor
+    changeItemChecked (state, itemId) {
+      state.items.forEach((item) => {
+        if (item.id === itemId) {
+          item.isChecked = !item.isChecked
+        }
+      })
+    },
+    setNewItemColor (state, { itemId, newColor }) {
+      state.items.forEach((item) => {
+        if (item.id === itemId) {
+          item.color = newColor
+        }
+      })
+    },
+    setNewItemAmount (state, { itemId, newAmount }) {
+      state.items.forEach((item) => {
+        if (item.id === itemId) {
+          item.amount = newAmount
+        }
+      })
+    },
+    setSquares (state, itemId) {
+      state.items.forEach((item) => {
+        if (item.id === itemId) {
+          for (let i = 0; i < item.amount; i += 1) {
+            item.squares.push({
+              id: `${item.id}_${i}`,
+              itemId: `${item.id}`,
+              color: item.color
+            })
+          }
+        }
+      })
+    },
+    setAllSquares (state) {
+      state.items.forEach((item) => {
+        for (let i = 0; i < item.amount; i += 1) {
+          item.squares.push({
+            id: `${item.id}_${i}`,
+            itemId: `${item.id}`,
+            color: item.color
+          })
+        }
+      })
+    },
+    changeSquaresAmount (state, itemId, newAmount) {
+      state.items.forEach((item) => {
+        if (item.id === itemId && item.amount < newAmount) {
+          item.squares.splice(newAmount, item.amount - newAmount)
+        } else if (item.id === itemId && item.amount > newAmount) {
+          for (let i = 0; i < newAmount - item.amount; i += 1) {
+            item.squares.push({
+              id: `${item.id}_${item.amount + i}`,
+              itemId: `${item.id}`,
+              color: item.color
+            })
+          }
+        }
+      })
+    },
+    deleteSquare (state, itemId, squareId) {
+      state.items.forEach((item) => {
+        if (item.id === itemId) {
+          const position = item.squares.findIndex((sq) => sq.id === squareId)
+          item.squares.splice(position, 1)
+          item.amount -= 1
         }
       })
     }

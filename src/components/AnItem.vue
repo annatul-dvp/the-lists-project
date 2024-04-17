@@ -5,7 +5,7 @@
       <span class="item__custom-checkbox" :class="classChecked" @click="changeCheckStatus"></span>
       {{ name }}
     </label>
-    <input type="text" class="item__amount" v-model="state.amount" @input="changeAmount">
+    <input type="text" class="item__amount" v-model="state.amount" @change="changeAmount">
     <input type="color" class="item__color" v-model="state.color" @change="changeColor">
   </li>
 </template>
@@ -13,7 +13,7 @@
 <script>
 import { defineComponent, reactive, ref, onMounted } from 'vue'
 import { setCheckboxStyle } from '@/hooks/useCheckbox'
-// import { useStore } from 'vuex'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   props: {
@@ -23,8 +23,9 @@ export default defineComponent({
     amount: { type: Number, required: true },
     color: { type: String, required: true }
   },
-  emits: ['update:color', 'update:amount', 'update:isChecked'],
-  setup (props, { emit: $emit }) {
+  setup (props) {
+    const $store = useStore()
+
     const state = reactive({
       isChecked: props.isChecked,
       amount: props.amount,
@@ -33,20 +34,25 @@ export default defineComponent({
     const classChecked = ref('')
 
     onMounted(() => {
+      // $store.commit('setSquares', props.id)
       classChecked.value = setCheckboxStyle('item__custom-checkbox', state.isChecked)
     })
 
     function changeCheckStatus () {
-      $emit('update:isChecked', !state.isChecked)
+      $store.commit('changeItemChecked', props.id)
+      // $emit('update:isChecked', !state.isChecked)
       classChecked.value = setCheckboxStyle('item__custom-checkbox', !state.isChecked)
     }
 
     function changeColor () {
-      $emit('update:color', state.color)
+      $store.commit('setNewItemColor', { itemId: props.id, newColor: state.color })
+      // $emit('update:color', state.color)
     }
 
     function changeAmount () {
-      $emit('update:amount', state.amount)
+      console.log('state.amount', state.amount)
+      $store.commit('setNewItemAmount', { itemId: props.id, newAmount: state.amount })
+      // $emit('update:amount', state.amount)
     }
 
     return {

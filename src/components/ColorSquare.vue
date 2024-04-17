@@ -1,29 +1,30 @@
 <template>
-  <div class="color-square"></div>
+  <span class="color-square" :style="styleSquare"></span>
 </template>
 
 <script>
-import { defineComponent, ref, onMounted } from 'vue'
+import { defineComponent, reactive, onMounted } from 'vue'
 export default defineComponent({
   props: {
+    id: { type: String, required: true },
     color: { type: String, required: true }
   },
   setup (props) {
-    const theColor = ref(props.color)
+    // console.log('props.color', props.color)
+    const styleSquare = reactive({
+      backgroundColor: props.color,
+      height: '10px',
+      width: '10px'
+    })
+
     onMounted(() => {
       const field = document.querySelector('.list-results__squares')
-      const size = parseInt((Number(field.clientWidth) - 5 * 29) / 30) + 'px'
-      const colorSquares = document.querySelectorAll('.color-square')
-      colorSquares.forEach((colorSquare) => {
-        colorSquare.style.backgroundColor = props.color
-        colorSquare.style.width = size
-        colorSquare.style.height = size
-      })
-      // console.log(props.color)
+      styleSquare.height = parseInt((Number(field.clientWidth) - 5 * 29) / 30) + 'px'
+      styleSquare.width = parseInt((Number(field.clientWidth) - 5 * 29) / 30) + 'px'
     })
 
     return {
-      theColor
+      styleSquare
     }
   }
 })
@@ -31,6 +32,8 @@ export default defineComponent({
 
 <style lang="scss">
   .color-square {
+    display: inline-block;
+    margin-right: 5px;
     width: 8px;
     height: 8px;
   }
