@@ -1,11 +1,13 @@
 <template>
   <main class="main">
     <div class="block input-block">
-      <AList v-for="list of lists" :key="list.id" v-model:name="list.name"
+      <AList v-for="list of lists" :key="list.id"
+      v-model:id="list.id" v-model:name="list.name"
       v-model:isChecked="list.isChecked" v-model:isOpened="list.isOpened"/>
     </div>
     <div class="block output-block">
-      <AListResult v-for="list of lists" :key="list.id" v-model:name="list.name"/>
+      <AListResult v-for="list of lists" :key="list.id"
+      v-model:name="list.name" v-model:id="list.id"/>
     </div>
   </main>
 </template>

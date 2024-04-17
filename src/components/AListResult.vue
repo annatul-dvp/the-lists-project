@@ -1,46 +1,77 @@
 <template>
   <div class="list-results">
-    <h4 class="list-results__name">{{ listName }}</h4>
-    <button>{{ btn.name }}</button>
-    <div class="list-results__squares">
-      <ColorSquare v-for="square in squares" :key="square.id"
-      v-model:id="square.id" v-model:color="square.color" />
+    <h4 class="list-results__name">{{ name }}</h4>
+    <button @click="changeSorting"> {{ btn.name }}</button>
+    <div class="list-results__squares" :style="squaresFieldStyles">
+      <ColorSquare v-for="square in squares" :key="square.id" v-model:size="squareSize"
+      v-model:id="square.id" v-model:color="square.color" v-model:itemId="square.itemId"/>
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref, computed } from 'vue'
+import { defineComponent, ref, reactive, computed, watch } from 'vue'
 import { useStore } from 'vuex'
-import ColorSquare from './ColorSquare.vue'
+// import ColorSquare from './ColorSquare.vue'
+import ColorSquare from '@/components/ColorSquare.vue'
+import { standartGridTemplateAreas, randomGridTemplateAreas } from '@/hooks/useSquaresSorting'
 
 export default defineComponent({
   props: {
+    id: { type: Number, required: true },
     name: { type: String, required: true }
   },
   components: {
     ColorSquare
   },
   setup (props) {
-    const listName = ref(props.name)
-
     const $store = useStore()
-    const items = computed(() => $store.getters.getItems.filter(item => item.listName === listName.value))
-    const squares = computed(() => $store.getters.getItems.reduce((acc, currentItem) => acc.concat(currentItem.squares), []))
+    const items = computed(() => $store.getters.getItems.filter(item => item.listId === props.id))
+    const squares = computed(() => $store.getters.getItems.filter(item => item.listId === props.id)
+      .reduce((acc, currentItem) => acc.concat(currentItem.squares), []))
+
+    const isSorted = ref(true)
+    // const gridTemplateAreas = computed(() => standartGridTemplateAreas(items.value))
+
+    const squareSize = ref('10px') // высота и ширина ячейки
+
+    const squaresFieldStyles = reactive({
+      display: 'grid',
+      rowGap: '4px',
+      columnGap: '4px',
+      gridTemplateColumns: `repeat(30, ${squareSize.value})`,
+      gridTemplateRows: `repeat(${items.value.length}, ${squareSize.value})`,
+      gridTemplateAreas: ''
+    })
 
     const btn = ref({
       id: 1,
       name: 'Перемешать'
     })
 
-    const color = ref('#532973')
+    function changeSorting () {
+      isSorted.value = !isSorted.value
+      console.log('clicked', isSorted.value)
+    }
+
+    watch(() => isSorted.value, (s) => {
+      console.log('watch started', s)
+      if (s) {
+        squaresFieldStyles.gridTemplateAreas = standartGridTemplateAreas(items.value)
+      } else {
+        squaresFieldStyles.gridTemplateAreas = randomGridTemplateAreas(items.value)
+      }
+
+      console.log(squaresFieldStyles.gridTemplateAreas)
+    }, { immediate: true })
 
     return {
-      listName,
-      items,
       squares,
+      squareSize,
+      squaresFieldStyles,
       btn,
-      color
+
+      changeSorting
     }
   }
 })
@@ -56,6 +87,7 @@ export default defineComponent({
     padding: 10px;
     border: 1px solid black;
     min-height: 100px;
+    width: 100%;
 
     &__name {
       font-size: 1rem;
@@ -63,6 +95,8 @@ export default defineComponent({
     }
 
     &__squares {
+      width: 100%;
+      grid-auto-flow: dense;
       // display: grid;
       // row-gap: 5px;
       // column-gap: 5px;

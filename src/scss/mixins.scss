@@ -1,4 +1,4 @@
-@mixin flex-row ($justify-content, $align-items, $wrap: owrap) {
+@mixin flex-row ($justify-content, $align-items, $wrap: nowrap) {
   display: flex;
   flex-wrap: $wrap;
   column-gap: 10px;

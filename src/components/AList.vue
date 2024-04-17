@@ -5,7 +5,7 @@
       <label class="list__name">
         <input type="checkbox" class="hidden list__checkbox" v-model="state.isChecked">
         <span class="list__custom-checkbox" :class="classChecked" @click="changeCheckStatus"></span>
-        {{ listName }}
+        {{ name }}
       </label>
     </div>
     <AnItem class="list__item" v-for="item in items" :key="item.id"
@@ -23,6 +23,7 @@ import { setCheckboxStyle } from '@/hooks/useCheckbox'
 
 export default defineComponent({
   props: {
+    id: { type: Number, required: true },
     name: { type: String, required: true },
     isChecked: { type: Boolean, required: true },
     isOpened: { type: Boolean, required: true }
@@ -32,10 +33,10 @@ export default defineComponent({
     AnItem
   },
   setup (props, { emit: $emit }) {
-    const listName = ref(props.name)
+    // const listId = ref(props.name)
 
     const $store = useStore()
-    const items = computed(() => $store.getters.getItems.filter(item => item.listName === listName.value))
+    const items = computed(() => $store.getters.getItems.filter(item => item.listId === props.id))
     const classChecked = ref('')
 
     // function checkItems (items) {
@@ -77,7 +78,6 @@ export default defineComponent({
     }
 
     return {
-      listName,
       classChecked,
       state,
       items,
